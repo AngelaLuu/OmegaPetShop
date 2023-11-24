@@ -43,6 +43,7 @@ app.use(require('./routes/notes'))
 app.use(require('./routes/users'))
 
 
+
 //global variables
 app.use((req, res, next) => {
 

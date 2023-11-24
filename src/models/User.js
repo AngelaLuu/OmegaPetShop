@@ -18,7 +18,7 @@ const userSchema = new Schema({
     numero : {
         type: Number, required: true
     },
-    contraseña : {
+    password : {
         type: String, required: true
     },
     type : {
@@ -26,14 +26,35 @@ const userSchema = new Schema({
     },
 })
 
-userSchema.methods.encryptPassword= async(contraseña) => {
-    const salt = await bcrypt.genSalt(10)
-    const hash = bcrypt.hash(contraseña, salt)
-    return hash
+// userSchema.methods.ObtenerTokenJWT= function(){
+//     const JWT_SECRET_KEY = "Lulu"
+//     return jwt.sign({
+//         id: this._id,
+//         nombreTien: this.nombreTien,
+//         nombrePersona: this.nombrePersona,
+//         direccion: this.direccion,
+//         correo: this.correo,
+//         numero: this.numero,
+//         type: this.type,
+//         password: this.password,
+//     }, 
+//         JWT_SECRET_KEY, 
+//         { 
+//             expiresIn: Date.now() + 10000
+//         }
+//     )
+// }
+
+ userSchema.methods.encryptPassword= async(password) => {
+     const salt = await bcrypt.genSalt(10)
+     const hash = bcrypt.hash(password, salt)
+     return hash
+ }
+
+userSchema.methods.matchPassword = async function (password) {
+    return await bcrypt.compare(password, this.password)
+    
 }
 
-userSchema.methods.matchPassword = async function (contraseña) {
-    return  await bcrypt.compare(contraseña, this.contraseña)
-}
-
+const User =
 module.exports = mongoose.model('User', userSchema)

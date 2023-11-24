@@ -1,6 +1,7 @@
 //const { create } = require('express-handlebars')
 const router = require('express').Router()
 const Note = require("../models/Note")
+const express = require('express');
 
 router.get('/notes', async (req, res, next) => {
     const notes = await Note.find().sort({date: 'desc'})
@@ -54,7 +55,7 @@ router.post("/notes/add", async (req, res) => {
         const newN = await newNote.save()
         if (newN) {
             req.flash("suc", "Producto agregado satisfactoriamente")
-            res.redirect("/notes")
+            res.redirect("/notes/tienda")
         } else {
             req.flash("error", "Error al agregar el producto")
             res.redirect("/notes")
@@ -63,6 +64,31 @@ router.post("/notes/add", async (req, res) => {
         
     }
 })
+
+router.get("/notes/tienda", (req, res) => {
+    res.render("notes/tienda")
+})
+
+
+router.post('/filtro', async (req, res) => {
+    try {
+        // Obtén el nombre de la tienda seleccionada desde el formulario
+        const nombreTienda = req.body.nombreTienda;
+
+        // Construye el filtro para la consulta
+        const filtro = nombreTienda ? { nombreTienda: nombreTienda } : {};
+
+        // Realiza la consulta a la base de datos con el filtro
+        const notes = await Note.find(filtro);
+
+        // Renderiza la vista de productos con los resultados filtrados
+        res.render('notes/list', { notes });
+    } catch (error) {
+        console.error('Error al manejar la ruta /filtro:', error);
+        // Manejar el error de acuerdo a tus necesidades
+        res.status(500).send('Error interno del servidor');
+    }
+});
 
 
 module.exports = router

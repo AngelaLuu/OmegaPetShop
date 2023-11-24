@@ -1,11 +1,15 @@
-
+<ul class="nav nav-pills">
+         <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Volver</a>
+        </li>
+    </ul>
 <div class="col-md-4 mx-auto"> 
     <div class="card">
     <div class="card-header">
-        <h3 class="card-title">New Note</h3>
+        <h3 class="card-title">Agrega un Arituculo</h3>
     </div>
     <div class="card-body">
-        <form action="/notes/add" method="POST">
+        <form action="/notes/add" id="myForm" method="POST" onsubmit="beforeSubmit(event)">
             <div class="form-group">
                 <input type="text" name="nombreTienda" class="form-control" placeholder="Nombre Tienda" autofocus>
             </div>
@@ -16,17 +20,78 @@
                 <input type="number" name="precio" class="form-control" placeholder="Precio" autofocus>
             </div>
             <div class="form-group">
-                <input type="text" name="imagen" class="form-control" placeholder="Imagen" autofocus>
+                <input type="file" id="fileInputImage" class="form-control mb-3" name="imagenFile"
+                            accept="image/*" required>
+                            <input type="text" hidden id="imagen" class="form-control mb-3" name="imagen">
             </div>
             <div class="form-group">
                 <textarea name="descripcion" class="form-control" placeholder="Descripcion"></textarea>
             </div>
             <div class="form-group">
                 <button class="bt btn-primary btn-block" type="submit">
-                    save
+                    Guardar
                 </button>
             </div>
         </form>
+         <script>
+
+                    function beforeSubmit(event) {
+                        event.preventDefault();
+                        const fileInputImage = document.getElementById('fileInputImage');
+                        Promise.resolve(uploadFile(fileInputImage.files[0])).then(_e => {
+                            document.getElementById('myForm').elements['imagen'].value = _e;
+                            document.getElementById('myForm').submit();
+                        })
+                    }
+
+                    // document.getElementById('uploadButton').addEventListener('click', uploadFile);
+                    async function uploadFile(file) {
+                        const responseee = await requestPost({
+                            files_data: [{
+                                id: file?.lastModified,
+                                folder: `angela/productos`,
+                                contentType: file?.type
+                            }]
+                        });
+
+                        const uploadData = responseee.data[0].data
+                        const url_download = responseee.data[0].url_download
+
+                        const formData = new FormData();
+                        Object.entries(uploadData.fields).forEach(([field, value]) => {
+                            formData.append(field, value);
+                        });
+                        formData.append("file", file);
+
+
+                        // Hacer una solicitud fetch al servidor
+                        const uploadFile = await fetch(uploadData.url, {
+                            method: 'POST',
+                            body: formData
+                        })
+
+                        return url_download;
+                    }
+
+                    async function requestPost(data = {}) {
+                        //@INFO endpoint para obtener firma
+                        const host = "https://maps-group.onrender.com/api/upload/generate-presigned-free";
+
+                        let options = {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        }
+
+                        const response = await fetch(host, options)
+                        const data_response = await response.json();
+
+                        return {
+                            ...data_response,
+                            status: response.status
+                        }
+                    }
+                </script>
     </div>
 </div>
 </div>

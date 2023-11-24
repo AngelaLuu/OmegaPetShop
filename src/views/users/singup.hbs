@@ -1,3 +1,10 @@
+<ul class="nav nav-pills">
+         <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Volver</a>
+        </li>
+    </ul>
+
+
 <form action="/users/singup" class="registration" method="POST">
     <h1>👋Registrate para emprender</h1>
 
@@ -27,7 +34,7 @@
     </label>
 
     <label class="pure-material-textfield-outlined mx-auto">
-        <input placeholder="Contraseña" name="contraseña" type="password" required>
+        <input placeholder="Contraseña" name="password" type="password" required>
         <span></span>
     </label>
 
@@ -41,7 +48,7 @@
         <span>Tienda</span>
     </label>
 
-    <button class="pure-material-button-contained" type="submit">Sign Up</button>
+    <button class="btn btn-primary mx-auto" type="submit">Sign Up</button>
 
     {{!-- <div class="done">
         <h1>👌 You're all set!</h1>
