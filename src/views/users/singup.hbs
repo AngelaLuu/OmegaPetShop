@@ -1,0 +1,53 @@
+<form action="/users/singup" class="registration" method="POST">
+    <h1>👋Registrate para emprender</h1>
+
+    <label class="pure-material-textfield-outlined mx-auto">
+        <input placeholder="Nombre de la Tienda" name="nombreTien" type="text" required>
+        <span></span>
+    </label>
+
+    <label class="pure-material-textfield-outlined mx-auto">
+        <input placeholder="Nombre Persona " name="nombrePersona" type="text" required>
+        <span></span>
+    </label>
+
+    <label class="pure-material-textfield-outlined mx-auto">
+        <input placeholder="Direccion" name="direccion" type="text" required>
+        <span></span>
+    </label>
+
+    <label class="pure-material-textfield-outlined mx-auto">
+        <input placeholder="Número de Contacto" name="numero" type="number" required>
+        <span></span>
+    </label>
+
+    <label class="pure-material-textfield-outlined mx-auto">
+     <input placeholder="Email" name="correo" type="email" required>
+      <span></span>
+    </label>
+
+    <label class="pure-material-textfield-outlined mx-auto">
+        <input placeholder="Contraseña" name="contraseña" type="password" required>
+        <span></span>
+    </label>
+
+    <label class="pure-material-radio mx-auto">
+        <input type="radio" name="type" required>
+        <span>Cliente</span>
+    </label>
+
+    <label class="pure-material-radio mx-auto">
+        <input type="radio" name="type" required>
+        <span>Tienda</span>
+    </label>
+
+    <button class="pure-material-button-contained" type="submit">Sign Up</button>
+
+    {{!-- <div class="done">
+        <h1>👌 You're all set!</h1>
+        <a class="pure-material-button-text" href="javascript:window.location.reload(true)">Again</a>
+    </div>
+    <div class="progress">
+        <progress class="pure-material-progress-circular" />
+    </div> --}}
+</form>

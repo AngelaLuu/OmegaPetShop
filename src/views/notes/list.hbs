@@ -1,0 +1,29 @@
+
+    {{#each notes}}
+
+    <div class="card border-light mb-3" style="max-width: 18rem;">
+
+        <img src="/img/camisetaBanda.jpeg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{nombreProducto}}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{nombreTienda}}</li>
+            <li class="list-group-item">{{precio}}</li>
+            <li class="list-group-item">{{descripcion}}</li>
+        </ul>
+        <div class="card-body">
+            <button type="button" class="btn btn-dark">Comprar Ahora</button>
+        </div>
+    </div>
+        </div>
+        {{else}}
+    <div class="card mx-auto">
+        <p>No hay productos registrados aún</p>
+        <a href="/notes/add" class="btn btn-dark">Crear un producto</a>
+    </div> 
+     {{/each}}
+    </div>
+    
+   
+</div>
